@@ -1,22 +1,50 @@
-import styled from 'styled-components'
+import styled from "styled-components";
+import React from "react";
+import { AuthContext } from "../src/components/AuthContext";
+import { useState } from "react";
+import RoutersComponents from "./RoutersComponents";
 
 export default function App() {
-return (
-  <Container>
-    <div>
-      lalala
-    </div>
-  </Container>
-)
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [cadastro, setCadastro] = useState({
+    email: "",
+    name: "",
+    password: "",
+    confirmPpassword: "",
+  });
+
+  const [user, setUser] = useState(null);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        form,
+        setForm,
+        user,
+        setUser,
+        cadastro,
+        setCadastro,
+      }}
+    >
+      <Container>
+        <RoutersComponents />
+      </Container>
+
+      {/* <Container>
+        <RoutersComponents />
+      </Container> */}
+    </AuthContext.Provider>
+  );
 }
-  const Container = styled.div`
-  width: 375px;
-  height: 667px;
-  background: #0e0e13;
+const Container = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  background-color: #8c11be;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: center;
   align-items: center;
-  align-content: space-between;
-`
+  justify-content: center;
+`;
