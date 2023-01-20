@@ -7,4 +7,8 @@ export const AuthContext = createContext({
   setUser: () => {},
   cadastro: {},
   setCadastro: () => {},
+  entrada: {},
+  setEntrada: () => {},
+  saida: {},
+  setSaida: () => {},
 });

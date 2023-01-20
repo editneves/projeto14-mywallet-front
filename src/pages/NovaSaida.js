@@ -1,25 +1,25 @@
 import styled from "styled-components";
 import axios from "axios";
 import { BASE_URL } from "../constants/urls";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../components/AuthContext";
 
-export default function Login() {
+export default function NovaSaida() {
   const navigate = useNavigate();
-  const { form, setForm, setUser } = useContext(AuthContext);
+  const { saida, setSaida, setUser } = useContext(AuthContext);
 
   const handleForm = (e) => {
-    setForm({
-      ...form,
+    setSaida({
+      ...saida,
       [e.target.name]: e.target.value,
     });
   };
 
-  const fazerLogin = (e) => {
+  const salvarSaida = (e) => {
     e.preventDefault();
 
-    const requisicao = axios.post(`${BASE_URL}/auth/login`, form);
+    const requisicao = axios.post(`${BASE_URL}/auth/login`, saida);
 
     requisicao.then((req) => {
       const user = req.data;
@@ -41,52 +41,47 @@ export default function Login() {
   return (
     <>
       <Container>
-        <Text> MyWallet </Text>
-        <form onSubmit={fazerLogin}>
+        <Text> Nova Saída </Text>
+        <form onSubmit={salvarSaida}>
           <input
-            type="email"
-            name="email"
-            placeholder="E-mail"
+            type="number"
+            name="valor"
+            placeholder="Valor"
             onChange={handleForm}
-            value={form.email}
+            value={saida.valor}
             required
           />
 
           <input
-            type="password"
-            name="password"
-            placeholder="Senha"
+            type="text"
+            name="Descrição"
+            placeholder="Descrição"
             onChange={handleForm}
-            value={form.password}
+            value={saida.descricao}
             required
           />
-
-          <button type="submit">Entrar</button>
+          <button type="submit">Salvar Saída</button>
         </form>
-        <Div>
-          <Link to="/cadastro">
-            <TextLink>Primeira vez? Cadastre-se!</TextLink>
-          </Link>
-        </Div>
       </Container>
     </>
   );
 }
 
-const Text= styled.div`
-display: flex;
-justify-content: center;
-width: 326px; 
-height: 50px;
-font-family: 'Saira Stencil One';
-font-style: normal;
-font-weight: 400;
-font-size: 32px;
-line-height: 50px;
-color: #FFFFFF;
+const Text = styled.div`
+  width: auto;
+  height: 31px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 31px;
+  color: #ffffff;
 `;
 
 const Container = styled.div`
+  width: auto;
+  height: 550px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -103,6 +98,7 @@ const Container = styled.div`
     font-weight: 400;
     font-size: 20px;
     line-height: 23px;
+    color: #000000;
     border-radius: 8px;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0) !important;
     border-bottom: 0px;
@@ -110,12 +106,11 @@ const Container = styled.div`
     background-color: white !important;
   }
   button {
-    background-color: #A328D6;
+    background-color: #a328d6;
     margin-top: 13px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 18px 122px;
     width: 326px;
     height: 46px;
     border-radius: 8px;
@@ -126,28 +121,7 @@ const Container = styled.div`
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
-    line-height: 16px;
+    line-height: 23px;
     color: #ffffff;
   }
-`;
-
-const TextLink = styled.label`
-  margin-top: 46px;
-  text-align: center;
-  text-decoration-line: underline;
-  font-family: "Raleway";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 18px;
-  color: #ffffff;
-`;
-
-const Div = styled.div`
-  margin-top: 20px;
-  width: 299px;
-  height: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

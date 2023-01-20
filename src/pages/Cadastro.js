@@ -35,6 +35,7 @@ export default function Cadastro() {
   return (
     <>
       <Container>
+        <Text> MyWallet </Text>
         <form onSubmit={fazerCadastro}>
           <input
             type="name"
@@ -79,9 +80,32 @@ export default function Cadastro() {
           </Link>
         </Div>
       </Container>
+
+      <Link to="/Home">
+        <TextLink>Home</TextLink>
+      </Link>
+      <Link to="/nova-entrada">
+        <TextLink>Nova Entrada</TextLink>
+      </Link>
+      <Link to="/nova-saida">
+        <TextLink>Nova Saida</TextLink>
+      </Link>
     </>
   );
 }
+
+const Text = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 326px;
+  height: 50px;
+  font-family: "Saira Stencil One";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 50px;
+  color: #ffffff;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -107,7 +131,7 @@ const Container = styled.div`
     background-color: white !important;
   }
   button {
-    background-color: #A328D6;
+    background-color: #a328d6;
     margin-top: 13px;
     display: flex;
     justify-content: center;

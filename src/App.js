@@ -6,6 +6,8 @@ import RoutersComponents from "./RoutersComponents";
 
 export default function App() {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [entrada, setEntrada] = useState({ valor: "", descricao: "" });
+  const [saida, setSaida] = useState({ valor: "", descricao: "" });
   const [cadastro, setCadastro] = useState({
     email: "",
     name: "",
@@ -24,6 +26,10 @@ export default function App() {
         setUser,
         cadastro,
         setCadastro,
+        entrada,
+        setEntrada,
+        saida,
+        setSaida,
       }}
     >
       <Container>
