@@ -6,7 +6,7 @@ import { AuthContext } from "../components/AuthContext";
 
 export default function NovaEntrada() {
   const navigate = useNavigate();
-  const { entrada, setEntrada, setUser , token, setToken} = useContext(AuthContext);
+  const { entrada, setEntrada, setUser , token} = useContext(AuthContext);
 
   const handleForm = (e) => {
     setEntrada({
@@ -19,7 +19,7 @@ export default function NovaEntrada() {
     e.preventDefault();
 
     const requisicao = axios.post(
-      `${process.env.REACT_APP_API_URL}/novaEntrada`,
+      `${process.env.REACT_APP_API_URL}/entradaCreate`,
       { entrada },
       {
         headers: {
@@ -30,8 +30,8 @@ export default function NovaEntrada() {
 
     requisicao.then((req) => {
       const user = req.data;
-      setUser(user);
-      setToken(user.token);
+      console.log(user)
+      //setUser(user);
 
       if (user.token === null) {
         navigate("/");
@@ -41,7 +41,7 @@ export default function NovaEntrada() {
     });
 
     requisicao.catch((err) => {
-      alert(err.response.data.message);
+      alert(err.response);
     });
   };
 
@@ -61,7 +61,7 @@ export default function NovaEntrada() {
 
           <input
             type="text"
-            name="Descrição"
+            name="descricao"
             placeholder="Descrição"
             onChange={handleForm}
             value={entrada.descricao}

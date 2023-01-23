@@ -22,8 +22,9 @@ export default function Cadastro() {
     const requisicao = axios.post(`${process.env.REACT_APP_API_URL}/sign-up`, cadastro);
     
     requisicao.then((req) => {
+      console.log(req.data)
       setCadastro(req.data);
-      navigate("/home");
+      navigate("/");
     });
 
     requisicao.catch((err) => {

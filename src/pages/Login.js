@@ -6,7 +6,7 @@ import { AuthContext } from "../components/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { form, setForm, setUser, token, setToken } = useContext(AuthContext);
+  const { form, setForm, setUser, setToken } = useContext(AuthContext);
 
   const handleForm = (e) => {
     setForm({
@@ -20,18 +20,14 @@ export default function Login() {
 
     const requisicao = axios.post(
       `${process.env.REACT_APP_API_URL}/sign-in`,
-      { form },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      form ,
     );
 
     requisicao.then((req) => {
       const user = req.data;
+      console.log(user, req.data)
       setUser(user);
-      setToken(user.token);
+      setToken(req.data);
 
       if (user.token === null) {
         navigate("/");

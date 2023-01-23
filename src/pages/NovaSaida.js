@@ -6,7 +6,7 @@ import { AuthContext } from "../components/AuthContext";
 
 export default function NovaSaida() {
   const navigate = useNavigate();
-  const { saida, setSaida, setUser , token, setToken} = useContext(AuthContext);
+  const { saida, setSaida, setUser , token} = useContext(AuthContext);
 
   const handleForm = (e) => {
     setSaida({
@@ -19,7 +19,7 @@ export default function NovaSaida() {
     e.preventDefault();
 
     const requisicao = axios.post(
-      `${process.env.REACT_APP_API_URL}/novaSaida`,
+      `${process.env.REACT_APP_API_URL}/saidaCreate`,
       { saida },
       {
         headers: {
@@ -31,7 +31,6 @@ export default function NovaSaida() {
     requisicao.then((req) => {
       const user = req.data;
       setUser(user);
-      setToken(user.token);
 
       if (user.token === null) {
         navigate("/");
@@ -61,7 +60,7 @@ export default function NovaSaida() {
 
           <input
             type="text"
-            name="Descrição"
+            name="descricao"
             placeholder="Descrição"
             onChange={handleForm}
             value={saida.descricao}
