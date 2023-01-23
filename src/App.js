@@ -16,7 +16,7 @@ export default function App() {
   });
 
   const [user, setUser] = useState(null);
-
+  const [token, setToken] = useState("");
   return (
     <AuthContext.Provider
       value={{
@@ -30,6 +30,8 @@ export default function App() {
         setEntrada,
         saida,
         setSaida,
+        token, 
+        setToken,
       }}
     >
       <Container>

@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
-import { BASE_URL } from "../constants/urls";
 import { useNavigate} from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../components/AuthContext";
 
 export default function NovaSaida() {
   const navigate = useNavigate();
-  const { saida, setSaida, setUser } = useContext(AuthContext);
+  const { saida, setSaida, setUser , token, setToken} = useContext(AuthContext);
 
   const handleForm = (e) => {
     setSaida({
@@ -19,15 +18,23 @@ export default function NovaSaida() {
   const salvarSaida = (e) => {
     e.preventDefault();
 
-    const requisicao = axios.post(`${BASE_URL}/auth/login`, saida);
+    const requisicao = axios.post(
+      `${process.env.REACT_APP_API_URL}/novaSaida`,
+      { saida },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     requisicao.then((req) => {
       const user = req.data;
       setUser(user);
-      window.localStorage.setItem("token", user.token);
+      setToken(user.token);
 
-      if (user.membership === null) {
-        navigate("/subscriptions");
+      if (user.token === null) {
+        navigate("/");
       } else {
         navigate("/home");
       }

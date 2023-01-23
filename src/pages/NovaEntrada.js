@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
-import { BASE_URL } from "../constants/urls";
 import { useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../components/AuthContext";
 
 export default function NovaEntrada() {
   const navigate = useNavigate();
-  const { entrada, setEntrada, setUser } = useContext(AuthContext);
+  const { entrada, setEntrada, setUser , token, setToken} = useContext(AuthContext);
 
   const handleForm = (e) => {
     setEntrada({
@@ -19,15 +18,23 @@ export default function NovaEntrada() {
   const salvarEntrada = (e) => {
     e.preventDefault();
 
-    const requisicao = axios.post(`${BASE_URL}/auth/login`, entrada);
+    const requisicao = axios.post(
+      `${process.env.REACT_APP_API_URL}/novaEntrada`,
+      { entrada },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     requisicao.then((req) => {
       const user = req.data;
       setUser(user);
-      window.localStorage.setItem("token", user.token);
+      setToken(user.token);
 
-      if (user.membership === null) {
-        navigate("/subscriptions");
+      if (user.token === null) {
+        navigate("/");
       } else {
         navigate("/home");
       }

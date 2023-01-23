@@ -11,4 +11,6 @@ export const AuthContext = createContext({
   setEntrada: () => {},
   saida: {},
   setSaida: () => {},
+  token: {}, 
+  setToken: () => {},
 });

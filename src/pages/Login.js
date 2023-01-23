@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
-import { BASE_URL } from "../constants/urls";
 import { useNavigate, Link } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../components/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { form, setForm, setUser } = useContext(AuthContext);
+  const { form, setForm, setUser, token, setToken } = useContext(AuthContext);
 
   const handleForm = (e) => {
     setForm({
@@ -19,15 +18,23 @@ export default function Login() {
   const fazerLogin = (e) => {
     e.preventDefault();
 
-    const requisicao = axios.post(`${BASE_URL}/auth/login`, form);
+    const requisicao = axios.post(
+      `${process.env.REACT_APP_API_URL}/sign-in`,
+      { form },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     requisicao.then((req) => {
       const user = req.data;
       setUser(user);
-      window.localStorage.setItem("token", user.token);
+      setToken(user.token);
 
-      if (user.membership === null) {
-        navigate("/subscriptions");
+      if (user.token === null) {
+        navigate("/");
       } else {
         navigate("/home");
       }
@@ -73,17 +80,17 @@ export default function Login() {
   );
 }
 
-const Text= styled.div`
-display: flex;
-justify-content: center;
-width: 326px; 
-height: 50px;
-font-family: 'Saira Stencil One';
-font-style: normal;
-font-weight: 400;
-font-size: 32px;
-line-height: 50px;
-color: #FFFFFF;
+const Text = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 326px;
+  height: 50px;
+  font-family: "Saira Stencil One";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 50px;
+  color: #ffffff;
 `;
 
 const Container = styled.div`
@@ -110,7 +117,7 @@ const Container = styled.div`
     background-color: white !important;
   }
   button {
-    background-color: #A328D6;
+    background-color: #a328d6;
     margin-top: 13px;
     display: flex;
     justify-content: center;
